@@ -32,11 +32,17 @@ def ListRemoteMachines()
   system "docker-machine ls"
 end
 
+def RemoveRemoteMachine(machine)
+  system "docker-machine rm #{machine}"
+end
+
 def PrintHelp()
   puts "Commands available"
   puts "create [name of droplet]                   -- Creates a new droplet"
   puts "save   [name of machine] [name of image]   -- Save a local image to a droplet"
   puts "run [name of machine] [name of image]      -- Runs an image in a droplet"
+  puts "remove [name of machine]                   -- Remvoe a remote machine"
+  puts "list                                       -- Lists all remote machines"
 end
 
 PrintHelp()
@@ -60,6 +66,14 @@ while (input = gets.chomp)
   if input.include? "run"
 
     RunImageInMachine(input.split[1], input.split[2])
+  end
+
+  if input == "list"
+    ListRemoteMachines()
+  end
+
+  if input.include? "remove"
+    RemoveRemoteMachine(input.split[1])
   end
 
   if input == "help"
